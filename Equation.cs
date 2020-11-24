@@ -99,6 +99,7 @@ namespace Project_02_Linear_Equations_Systems
             var temp = new Equation("");
             temp.Parameters.AddRange(Parameters);
             temp.ParameterSigns.AddRange(ParameterSigns);
+            temp.InputString = InputString;
             return temp;
         }
         public double GetParameter(int id)

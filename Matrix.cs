@@ -1,6 +1,7 @@
 ﻿using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -52,6 +53,24 @@ namespace Project_02_Linear_Equations_Systems
                 throw new Exception("Invalid number of parameters/equations");
             }
 
+            bool columnOfZeros;
+            for (int i = 0; i < equationsList.Count; i++)
+            {
+                columnOfZeros = true;
+                foreach (Equation eq in equationsList)
+                {
+                    if (eq.GetParameter(i) != 0)
+                    {
+                        columnOfZeros = false;
+                    }
+                }
+                if (columnOfZeros)
+                {
+                    Console.WriteLine($"ERROR: All parameters for unknown {i + 1} are zeros. Just don't write them if needed");
+                    throw new Exception("Invalid parameters given");
+                }
+            }
+
             foreach (Equation eq in equationsList)
             {
                 var temp = eq.ReturnCopy();
@@ -67,10 +86,10 @@ namespace Project_02_Linear_Equations_Systems
         public void Solve()
         {
             CheckMatrix();
-            CorrectEquationsOrder();
 
             for (int k =0; k < equationsList.Count; k++) //makes every number in main diagonal = 1, everything under it = 0
             {
+                CorrectOrder(k);
                 equationsList[k].Divide(equationsList[k].Parameters[k]);
                 for (int i = k+1; i < equationsList.Count; i++)
                 {
@@ -105,33 +124,16 @@ namespace Project_02_Linear_Equations_Systems
             }
         }
 
-        private void CorrectEquationsOrder()
+        private void CorrectOrder(int i) //finds for highest value for position i and swaps equation[i] with it
         {
-            for (int k = 0; k < 2; k++) // not sure if algorithm is perfect, so run it 2 times
+            int tempid = i;
+            double tempvalue = double.MinValue;
+            for (int k = i; k < equationsList.Count; k++)
             {
-                int i = 0;
-                while (i < equationsList.Count)
-                {
-
-                    if (equationsList[i].Parameters[i] == 0)
-                    {
-                        if (i == equationsList.Count - 1)
-                        {
-                            equationsList[i].SwapWith(equationsList[0]);
-                        }
-                        else
-                        {
-                            var temp = equationsList[i].ReturnCopy();
-                            equationsList.RemoveAt(i);
-                            equationsList.Add(temp);
-                        }
-                    }
-                    else
-                    {
-                        i++;
-                    }
-                }
+                tempid = (equationsList[k].GetParameter(k) > tempvalue) ? k : tempid;
             }
+
+            equationsList[tempid].SwapWith(equationsList[i]);
         }
     }
 }
