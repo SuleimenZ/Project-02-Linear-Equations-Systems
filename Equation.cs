@@ -19,19 +19,21 @@ namespace Project_02_Linear_Equations_Systems
         { 
             InputString = inputString; 
 
-            if(CheckEquation(inputString))
+            if(CheckEquation())
             {
                 CreateLists();
             }
             else
             {
-                Console.WriteLine("There are incorrect characters in your input");
+                Console.WriteLine("Input is incorrect. You must to give at least two numbers, no letters allowed");
             }
         }
 
-        public bool CheckEquation(string equation)
+        public bool CheckEquation()
         {
-            return equation.Replace("-", "").Replace(" ", "").All(char.IsDigit);
+            bool isDigit = InputString.Replace("-", "").Replace(" ", "").All(char.IsDigit);
+            bool isOnlyDigit = (InputString.Replace("-", "").Split(' ').Length == 1 && ! (InputString.Replace("-", "").Split(' ')[0] == ""));
+            return (isDigit && !isOnlyDigit);
         }
 
         public void ShowFullEquation()

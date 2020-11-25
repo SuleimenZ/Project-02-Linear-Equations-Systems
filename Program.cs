@@ -21,16 +21,20 @@ namespace Project_02_Linear_Equations_Systems
 
             while (exitIfFalse)
             { 
-                Console.Write($"Equation {id++}: ");
+                Console.Write($"Equation {id}: ");
                 userInput = Console.ReadLine();
                 if (userInput == "END")
                 {
                     break;
                 }
-                matrix.AddEquation(userInput);
+                else if(new Equation(userInput).CheckEquation() && !string.IsNullOrEmpty(userInput))
+                {
+                    matrix.AddEquation(userInput);
+                    id++;
+                }
             }
 
-            Console.SetCursorPosition(0, 3 + id);
+            Console.Clear();
             Console.WriteLine("You have entered the following equations:");
 
             matrix.ShowEquations();

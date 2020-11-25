@@ -36,6 +36,12 @@ namespace Project_02_Linear_Equations_Systems
 
         public void CheckMatrix()
         {
+            if(equationsList.Count == 0)
+            {
+                Console.WriteLine("ERROR: No input was given");
+                throw new Exception("No input was given");
+            }
+
             int testNumOfParameters = equationsList[0].Parameters.Count;
             for (int i = 1; i < equationsList.Count; i++)
             {
