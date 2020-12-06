@@ -127,7 +127,7 @@ namespace Project_02_Linear_Equations_Systems
 
             Parameters = InputString.Split(' ').Select(Double.Parse).ToList();
 
-            foreach (int parameter in Parameters)
+            foreach (double parameter in Parameters)
             {
                 if(parameter >= 0)
                 {
